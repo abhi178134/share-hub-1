@@ -11,4 +11,4 @@
 ### Django :
 ### Connecting Django with React : https://www.geeksforgeeks.org/how-to-connect-django-with-reactjs/
 ### Django React Setup : https://www.youtube.com/watch?v=bCalm1Tcz4k
-
+### Django React Setup : https://studygyaan.com/django/django-react-setup-best-project-structure
