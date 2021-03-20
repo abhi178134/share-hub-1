@@ -9,8 +9,9 @@ const Item = ({item}) => {
         <Card.Title>{item.title}</Card.Title>
         <Card.Text>
           {item.description}<br />
+          File Url : {item.fileUrl} <br />
           Shared by : {item.author.name}<br />
-          Contact at : {item.author.phoneNumber}
+          Contact at : {item.author.phone}
         </Card.Text>
       </Card.Body>
     </Card>

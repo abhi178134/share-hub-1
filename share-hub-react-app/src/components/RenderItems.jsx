@@ -1,29 +1,23 @@
-import React, {useState } from "react";
+import React, {useState, useEffect} from "react";
 import {Container} from 'react-bootstrap';
-import axios from "axios";
+import {auth, db, storage, timestamp} from '../firebase/config.js';
 import Item from './Item';
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://www.sharehub.com";
 
 const RenderItems = ({}) => {
   // array containing items
-  const [items, setItems] = useState([{
-    id: "id",
-    title: "Item Title",
-    description: "This is where description will be displayed",
-    author: {
-      name: "Autor Name",
-      phoneNumber: "9876543210",
-    },
-  },
-  {
-    id: "idq",
-    title: "Item Title",
-    description: "This is where description will be displayed",
-    author: {
-      name: "Autor Name",
-      phoneNumber: "9876543210",
-    },
-  }])
+  const [items, setItems] = useState([]);
+
+  useEffect(async () => {
+    const items = await db.collection('stuffs')
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(snap => {
+        let items = [];
+        snap.forEach(item => {
+          items.push({...item.data(), id: item.id});
+        });
+        console.log(items);
+        setItems(items);
+      })},[]);
 
   return (
     <div>
@@ -38,11 +32,19 @@ const RenderItems = ({}) => {
     </div>
   );
 
-  const componentDidMount = async () => {
-    console.log(items);
-    const { data: items } = await axios.get("/items/");
-    setItems(items);
-  }
+  // const componentDidMount = async () => {
+  //   console.log(items);
+  //   const items = await db.collection('stuffs')
+  //     .orderBy('createdAt', 'desc')
+  //     .onSnapshot(snap => {
+  //       let items = [];
+  //       snap.forEach(item => {
+  //         items.push({...item.data(), id: item.id});
+  //       });
+  //       console.log(items);
+  //       setItems(items);
+  //     });
+  // }
 }
 
 export default RenderItems;

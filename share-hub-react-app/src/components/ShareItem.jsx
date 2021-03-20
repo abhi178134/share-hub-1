@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Container, Row, Col, Form, Button, Dropdown} from 'react-bootstrap';
+import {getCurrentUser} from '../services/auth';
+import {auth, db, storage, timestamp} from '../firebase/config.js';
+// import getUrl from '../firebase/getUrl';
 
 const ShareItem = ({}) => {
 
@@ -7,14 +10,69 @@ const ShareItem = ({}) => {
     const [category, setCategory] = useState(null);
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState(null);
+    const [fileUrl, setFileUrl] = useState(null);
+    const [createdAt, setCreatedAt] = useState(null);
+    const [author, setAuthor] = useState({});
+    // const [progress, setProgress] = useState(0);
+    // const [error, setError] = useState(null);
 
-    console.log({title, category, file, description});
     const handleFile = (e) => {
-    let selected = e.target.files[0];
-    if (selected) {
-      setFile(selected);
+      let selected = e.target.files[0];
+      if (selected) {
+        setFile(selected);
       }
     };
+
+    const handleShare = async (e) => {
+      e.preventDefault();
+      let myName = "";
+      let myPhone = "";
+      const uref = db.collection('users');
+      const me = await uref.where("email", "==", getCurrentUser().email).get();
+      me.forEach((doc) => {
+       myName = doc.data().name;
+       myPhone = doc.data().phone;
+       setAuthor({name: myName, phone: myPhone});
+       console.log(myName, myPhone);
+      });
+      const shareData = {
+        title,
+        category,
+        file,
+        description,
+        author: {
+          name: myName,
+          phone: myPhone,
+        }
+      };
+      console.log(shareData);
+      // add shareData to firebase
+      const user = getCurrentUser();
+      if(user) {
+        const storageRef = storage.ref(file.name);
+        const collectionRef = db.collection('stuffs');
+        storageRef.put(file).then(async () => {
+          const fileUrl = await storageRef.getDownloadURL();
+          const createdAt = timestamp();
+          setFileUrl(fileUrl);
+          setCreatedAt(createdAt);
+        });
+
+        collectionRef.add({
+            title,
+            category,
+            fileUrl,
+            description,
+            createdAt,
+            author
+          }).catch(err => {
+            console.log(err.message);
+          });
+      }else {
+        throw(console.error("Login first"))
+      }
+    };
+
     return (
       <Container>
         <Row className="mb-5 mt-5">
@@ -87,7 +145,7 @@ const ShareItem = ({}) => {
           </Row>
           </Form.Group>
           <Col xs={{span: 3, offset:4}}>
-          <Button variant="success" type="submit">
+          <Button onClick={handleShare} variant="success" type="submit">
             Share
           </Button>
           </Col>
