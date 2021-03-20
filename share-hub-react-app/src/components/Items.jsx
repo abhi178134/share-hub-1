@@ -3,7 +3,9 @@ import {Container} from 'react-bootstrap';
 class Items extends Component {
   render() {
     return (
-      
+      <div>
+      Sared items will be displayed here..
+      </div>
     );
   }
 }
