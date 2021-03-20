@@ -12,6 +12,7 @@ const ShareItem = ({}) => {
     const [description, setDescription] = useState(null);
     const [fileUrl, setFileUrl] = useState(null);
     const [createdAt, setCreatedAt] = useState(null);
+    const [author, setAuthor] = useState({});
     // const [progress, setProgress] = useState(0);
     // const [error, setError] = useState(null);
 
@@ -24,18 +25,32 @@ const ShareItem = ({}) => {
 
     const handleShare = async (e) => {
       e.preventDefault();
+      let myName = "";
+      let myPhone = "";
+      const uref = db.collection('users');
+      const me = await uref.where("email", "==", getCurrentUser().email).get();
+      me.forEach((doc) => {
+       myName = doc.data().name;
+       myPhone = doc.data().phone;
+       setAuthor({name: myName, phone: myPhone});
+       console.log(myName, myPhone);
+      });
       const shareData = {
         title,
         category,
         file,
-        description
+        description,
+        author: {
+          name: myName,
+          phone: myPhone,
+        }
       };
+      console.log(shareData);
       // add shareData to firebase
       const user = getCurrentUser();
       if(user) {
         const storageRef = storage.ref(file.name);
         const collectionRef = db.collection('stuffs');
-
         storageRef.put(file).then(async () => {
           const fileUrl = await storageRef.getDownloadURL();
           const createdAt = timestamp();
@@ -48,7 +63,8 @@ const ShareItem = ({}) => {
             category,
             fileUrl,
             description,
-            createdAt
+            createdAt,
+            author
           }).catch(err => {
             console.log(err.message);
           });
