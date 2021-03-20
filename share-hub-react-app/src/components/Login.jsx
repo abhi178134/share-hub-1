@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import axios from "axios";
+import auth from "../services/auth";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://www.sharehub.com";
 
@@ -55,7 +56,7 @@ class Login extends Component {
     };
     const res = await axios.post("/users/login", userData);
     console.log(res.headers["x-auth-token"]);
-    // auth.setToken(res.headers["x-auth-token"]);
+    auth.setToken(res.headers["x-auth-token"]);
     window.location.assign("/");
   };
 }
