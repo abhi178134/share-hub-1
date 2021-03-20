@@ -4,8 +4,8 @@ class Home extends Component {
   render() {
     return (
       <Container>
-        <Row>
-          <Col>
+        <Row className="mb-5 mt-5">
+          <Col xs={{ offset:5}}>
             <p>
               Wellcome to Share Hub. <br />
               Help those who are in need. <br />
@@ -18,13 +18,13 @@ class Home extends Component {
 
           <Form.Group controlId="">
           <Row>
-          <Col xs="4" >
+          <Col xs={{span: 4}} >
             <Form.Label>Stuff Title</Form.Label>
           </Col>
-          <Col>
+          <Col xs={{span: 6}}>
             <Form.Control className="col" type="text" placeholder="Title" />
           </Col>
-          <Col xs="12">
+          <Col xs={{offset:4, span:12}}>
             <Form.Text className="text-muted">
             eg. Book on C++, Link to React tutorial, Unused Laptop, etc
             </Form.Text>
@@ -62,11 +62,23 @@ class Home extends Component {
           </Col>
           </Row>
           </Form.Group>
-
+          <Form.Group>
+          <Row>
+          <Col xs="4">
+            <Form.Label>Description of the item</Form.Label>
+          </Col>
+          <Col xs="6">
+            <Form.Control as="textarea" />
+          </Col>
+          </Row>
+          </Form.Group>
+          <Col xs={{span: 3, offset:4}}>
           <Button variant="primary" type="submit">
             Submit
           </Button>
-          
+          </Col>
+
+
         </Form>
       </Container>
     );
