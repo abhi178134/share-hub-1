@@ -12,7 +12,6 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import NotFound from "./components/NotFound";
 
-
 function App() {
   return (
     <React.Fragment>
