@@ -1,8 +1,20 @@
-import React, {Component} from "react";
+import React, { useState } from "react";
 import {Container, Row, Col, Form, Button, Dropdown} from 'react-bootstrap';
 
-class ShareItem extends Component {
-  render() {
+const ShareItem = ({}) => {
+
+    const [title, setTitle] = useState(null);
+    const [category, setCategory] = useState(null);
+    const [file, setFile] = useState(null);
+    const [description, setDescription] = useState(null);
+
+    console.log({title, category, file, description});
+    const handleFile = (e) => {
+    let selected = e.target.files[0];
+    if (selected) {
+      setFile(selected);
+      }
+    };
     return (
       <Container>
         <Row className="mb-5 mt-5">
@@ -23,7 +35,7 @@ class ShareItem extends Component {
             <Form.Label>Stuff Title</Form.Label>
           </Col>
           <Col xs={{span: 6}}>
-            <Form.Control className="col" type="text" placeholder="Title" />
+            <Form.Control onChange={(e)=>setTitle(e.target.value)} className="col" type="text" placeholder="Title" />
           </Col>
           <Col xs={{offset:4, span:6}}>
             <Form.Text className="text-muted">
@@ -39,15 +51,15 @@ class ShareItem extends Component {
             <Form.Label>Category</Form.Label>
           </Col>
           <Col xs ="6">
-            <Dropdown>
+            <Dropdown onSelect={(e)=>setCategory(e)}>
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
               Select Category for Your Stuff
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Books</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Tutorials</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Gadgets</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Important Links</Dropdown.Item>
+              <Dropdown.Item eventKey="book">Books</Dropdown.Item>
+              <Dropdown.Item eventKey="tutorial">Tutorials</Dropdown.Item>
+              <Dropdown.Item eventKey="gadget">Gadgets</Dropdown.Item>
+              <Dropdown.Item eventKey="link">Important Links</Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
           </Col>
@@ -60,7 +72,7 @@ class ShareItem extends Component {
             <Form.Label>Choose file</Form.Label>
           </Col>
           <Col xs="7">
-            <Form.File id="exampleFormControlFile1"/>
+            <Form.File onChange={handleFile} id="exampleFormControlFile1"/>
           </Col>
           </Row>
           </Form.Group>
@@ -70,7 +82,7 @@ class ShareItem extends Component {
             <Form.Label>Description of the item</Form.Label>
           </Col>
           <Col xs="6">
-            <Form.Control as="textarea" placeholder="Also add links if available or share file above" />
+            <Form.Control onChange={(e)=>setDescription(e.target.value)} as="textarea" placeholder="Also add links if available or share file above" />
           </Col>
           </Row>
           </Form.Group>
@@ -80,11 +92,10 @@ class ShareItem extends Component {
           </Button>
           </Col>
 
-
         </Form>
       </Container>
     );
-  }
+
 }
 
 export default ShareItem;

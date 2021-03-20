@@ -1,38 +1,35 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {Navbar, Nav, Form, Button, NavDropdown, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import auth from '../services/auth';
 
-class NavBar extends Component {
-  state = {
-    user: auth.getCurrentUser(),
-  };
+const NavBar = ({}) => {
+  const [user, setUser] = useState(auth.getCurrentUser);
 
-  render() {
-    return (
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand as={Link} to="/">Share Hub</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/">Stuffs Available</Nav.Link>
-            <Nav.Link as={Link} to="/share">Share Stuffs</Nav.Link>
+  return (
+    <Navbar bg="light" expand="lg">
+      <Navbar.Brand as={Link} to="/">Share Hub</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link as={Link} to="/">Stuffs Available</Nav.Link>
+          <Nav.Link as={Link} to="/share">Share Stuffs</Nav.Link>
+        </Nav>
+        {user &&
+          <Nav className="ml-auto">
+            <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
           </Nav>
-          {this.state.user &&
-            <Nav className="ml-auto">
-              <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
-            </Nav>
-          }
-          {!this.state.user &&
-            <Nav className="ml-auto">
-              <Nav.Link as={Link} to="/login">Login</Nav.Link>
-              <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
-            </Nav>
-          }
-        </Navbar.Collapse>
-      </Navbar>
-    );
-  }
+        }
+        {!user &&
+          <Nav className="ml-auto">
+            <Nav.Link as={Link} to="/login">Login</Nav.Link>
+            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+          </Nav>
+        }
+      </Navbar.Collapse>
+    </Navbar>
+  );
+
 }
 
 export default NavBar;
