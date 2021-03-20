@@ -1,8 +1,19 @@
 import React, { Component } from "react";
 import {Form, Row, Col, Button} from 'react-bootstrap';
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://www.sharehub.com";
 
 class Signup extends Component {
+  state = {
+    name:"",
+    email:"",
+    password:"",
+    confirmPassword:"",
+    phoneNumber:"",
+  };
   render() {
+    console.log(this.state);
     return (
       <Form>
         <Form.Group controlId="">
@@ -11,7 +22,9 @@ class Signup extends Component {
           <Form.Label>Name</Form.Label>
         </Col>
         <Col xs={{span: 6}}>
-          <Form.Control className="col" type="text" placeholder="Name" />
+          <Form.Control onChange={(input)=>{
+            this.setState({name: input.target.value})
+          }} type="text" placeholder="Name" />
         </Col>
         </Row>
         </Form.Group>
@@ -22,7 +35,9 @@ class Signup extends Component {
           <Form.Label>Email</Form.Label>
         </Col>
         <Col xs="6">
-        <Form.Control className="col" type="email" placeholder="example@email.com" />
+        <Form.Control onChange={(input)=>{
+          this.setState({email: input.target.value})
+        }} type="email" placeholder="example@email.com" />
         </Col>
         </Row>
         </Form.Group>
@@ -32,7 +47,9 @@ class Signup extends Component {
           <Form.Label>Password</Form.Label>
         </Col>
         <Col xs="6">
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control onChange={(input)=>{
+            this.setState({password: input.target.value})
+          }} type="password" placeholder="Password" />
         </Col>
         </Row>
         </Form.Group>
@@ -42,7 +59,9 @@ class Signup extends Component {
           <Form.Label>Confirm Password</Form.Label>
         </Col>
         <Col xs="6">
-          <Form.Control type="password" placeholder="Confirm Password" />
+          <Form.Control onChange={(input)=>{
+            this.setState({confirmPassword: input.target.value})
+          }} type="password" placeholder="Confirm Password" />
         </Col>
         </Row>
         </Form.Group>
@@ -52,18 +71,34 @@ class Signup extends Component {
           <Form.Label>Contact Number</Form.Label>
         </Col>
         <Col xs="6">
-          <Form.Control type="number" placeholder="Phone Number" />
+          <Form.Control onChange={(input)=>{
+            this.setState({phoneNumber: input.target.value})
+          }} type="number" placeholder="Phone Number" />
         </Col>
         </Row>
         </Form.Group>
         <Col xs={{span: 3, offset:4}}>
-        <Button variant="primary" type="submit">
+        <Button onClick={(e)=>this.handleSignup(e)} variant="primary" type="submit">
           Signup
         </Button>
         </Col>
       </Form>
     );
   }
+  handleSignup = async (e) => {
+    console.log(this.state);
+    e.preventDefault();
+    const userData = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      confirmPassword: this.state.confirmPassword,
+      phoneNumber: this.state.phoneNumber,
+    };
+    const res = await axios.post("/users/signup", userData);
+    // auth.setToken(res.headers["x-auth-token"]);
+    window.location.assign("/");
+  };
 }
 
 export default Signup;
