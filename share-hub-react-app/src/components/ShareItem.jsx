@@ -75,8 +75,8 @@ class ShareItem extends Component {
           </Row>
           </Form.Group>
           <Col xs={{span: 3, offset:4}}>
-          <Button variant="primary" type="submit">
-            Submit
+          <Button variant="success" type="submit">
+            Share
           </Button>
           </Col>
 
