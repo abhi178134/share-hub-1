@@ -1,7 +1,13 @@
 import React, {Component} from "react";
 import {Navbar, Nav, Form, Button, NavDropdown, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import auth from '../services/auth';
+
 class NavBar extends Component {
+  state = {
+    user: auth.getCurrentUser(),
+  };
+
   render() {
     return (
       <Navbar bg="light" expand="lg">
@@ -12,10 +18,17 @@ class NavBar extends Component {
             <Nav.Link as={Link} to="/">Stuffs Available</Nav.Link>
             <Nav.Link as={Link} to="/share">Share Stuffs</Nav.Link>
           </Nav>
-          <Nav className="ml-auto">
-            <Nav.Link as={Link} to="/login">Login</Nav.Link>
-            <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
-          </Nav>
+          {this.state.user &&
+            <Nav className="ml-auto">
+              <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+            </Nav>
+          }
+          {!this.state.user &&
+            <Nav className="ml-auto">
+              <Nav.Link as={Link} to="/login">Login</Nav.Link>
+              <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+            </Nav>
+          }
         </Navbar.Collapse>
       </Navbar>
     );

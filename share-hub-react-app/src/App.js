@@ -9,6 +9,7 @@ import Items from './components/Items';
 import ShareItem from './components/ShareItem';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import NotFound from "./components/NotFound";
 
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/not-found" component={NotFound}></Route>
         <Route path="/signup" exact component={Signup}></Route>
         <Route path="/login" exact component={Login}></Route>
+        <Route path="/logout" exact component={Logout}></Route>
         <Route path="/share" exact component={ShareItem}></Route>
         <Route path="/" exact component={Items}></Route>
         <Redirect to="/not-found" />

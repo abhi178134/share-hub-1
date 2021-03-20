@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import axios from "axios";
+import auth from "../services/auth";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://www.sharehub.com";
 
@@ -96,7 +97,7 @@ class Signup extends Component {
       phoneNumber: this.state.phoneNumber,
     };
     const res = await axios.post("/users/signup", userData);
-    // auth.setToken(res.headers["x-auth-token"]);
+    auth.setToken(res.headers["x-auth-token"]);
     window.location.assign("/");
   };
 }
