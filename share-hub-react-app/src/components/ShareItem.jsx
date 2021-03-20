@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Container, Row, Col, Form, Button, Dropdown} from 'react-bootstrap';
 
-class Home extends Component {
+class ShareItem extends Component {
   render() {
     return (
       <Container>
@@ -87,4 +87,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default ShareItem;
