@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {Form, Row, Col, Button} from 'react-bootstrap';
-import axios from "axios";
-import auth from "../services/auth";
-
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://www.sharehub.com";
+import {setToken} from "../services/auth";
+import {auth, db} from '../firebase/config.js';
 
 const Signup = ({}) => {
   const [name, setName] = useState(null);
@@ -11,8 +9,6 @@ const Signup = ({}) => {
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [phone, setPhone] = useState(null);
-
-  console.log({name, email, password, confirmPassword, phone});
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -23,10 +19,21 @@ const Signup = ({}) => {
       confirmPassword,
       phone,
     };
+    // check if password === confirmPassword
     console.log("data",userData);
-    const res = await axios.post("/users/signup", userData);
-    auth.setToken(res.headers["x-auth-token"]);
-    window.location.assign("/");
+    //add user to firebase and get auth token
+    auth.createUserWithEmailAndPassword(email, password).then(cred => {
+      return db.collection('users').doc(cred.user.uid).set({
+        name,
+        email,
+        phone
+      });
+    }).then(async() => {
+      const token = await auth.currentUser.getIdToken();
+      console.log(token);
+      setToken(token);
+      window.location.assign("/");
+    });
   };
 
   return (

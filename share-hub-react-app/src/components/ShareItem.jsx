@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import {Container, Row, Col, Form, Button, Dropdown} from 'react-bootstrap';
+import {getCurrentUser} from '../services/auth';
+import {auth, db} from '../firebase/config.js';
+import getUrl from '../firebase/getUrl';
 
 const ShareItem = ({}) => {
 
@@ -8,6 +11,7 @@ const ShareItem = ({}) => {
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState(null);
 
+
     console.log({title, category, file, description});
     const handleFile = (e) => {
     let selected = e.target.files[0];
@@ -15,6 +19,33 @@ const ShareItem = ({}) => {
       setFile(selected);
       }
     };
+
+    const HandleShare = async (e) => {
+      e.preventDefault();
+      const shareData = {
+        title,
+        category,
+        file,
+        description
+      };
+      // add shareData to firebase
+      const user = getCurrentUser();
+      if(user) {
+        const {fileUrl, createdAt} = getUrl(file);
+        db.collection('stuffs').add({
+            title,
+            category,
+            fileUrl,
+            description,
+            createdAt
+          }).catch(err => {
+            console.log(err.message);
+          });
+      }else {
+        throw(console.error("Login first"))
+      }
+    };
+
     return (
       <Container>
         <Row className="mb-5 mt-5">
@@ -87,7 +118,7 @@ const ShareItem = ({}) => {
           </Row>
           </Form.Group>
           <Col xs={{span: 3, offset:4}}>
-          <Button variant="success" type="submit">
+          <Button onClick={HandleShare} variant="success" type="submit">
             Share
           </Button>
           </Col>

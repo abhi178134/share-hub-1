@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {Navbar, Nav, Form, Button, NavDropdown, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import auth from '../services/auth';
+import {getCurrentUser} from '../services/auth';
 
 const NavBar = ({}) => {
-  const [user, setUser] = useState(auth.getCurrentUser);
+  const [user, setUser] = useState(getCurrentUser);
 
   return (
     <Navbar bg="light" expand="lg">

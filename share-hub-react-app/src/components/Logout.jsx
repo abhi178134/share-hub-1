@@ -1,11 +1,11 @@
 import { useState } from "react";
-import auth from "../services/auth";
+import {logout} from "../services/auth";
+import {auth} from '../firebase/config.js';
 
 const Logout = () =>{
-  const componentDidMount = () => {
-    auth.logout();
-    window.location = "/";
-  }
+  auth.signOut();
+  logout();
+  window.location = "/";
   return null;
 }
 

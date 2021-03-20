@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {Form, Row, Col, Button} from 'react-bootstrap';
-import axios from "axios";
-import auth from "../services/auth";
-
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || "http://www.sharehub.com";
+import {setToken} from "../services/auth";
+import {auth} from '../firebase/config.js';
 
 const Login = () => {
   const [email, setEmail] = useState(null);
@@ -15,10 +13,12 @@ const Login = () => {
       email,
       password
     };
-    const res = await axios.post("/users/login", userData);
-    console.log(res.headers["x-auth-token"]);
-    auth.setToken(res.headers["x-auth-token"]);
-    window.location.assign("/");
+    auth.signInWithEmailAndPassword(email, password).then(async (cred) => {
+      const token = await auth.currentUser.getIdToken();
+      console.log(token);
+      setToken(token);
+      window.location.assign("/");
+    });
   };
 
   return (
