@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Container, Row, Col, Form, Button, Dropdown} from 'react-bootstrap';
 import {getCurrentUser} from '../services/auth';
-import {auth, db} from '../firebase/config.js';
-import getUrl from '../firebase/getUrl';
+import {auth, db, storage, timestamp} from '../firebase/config.js';
+// import getUrl from '../firebase/getUrl';
 
 const ShareItem = ({}) => {
 
@@ -10,17 +10,19 @@ const ShareItem = ({}) => {
     const [category, setCategory] = useState(null);
     const [file, setFile] = useState(null);
     const [description, setDescription] = useState(null);
+    const [fileUrl, setFileUrl] = useState(null);
+    const [createdAt, setCreatedAt] = useState(null);
+    // const [progress, setProgress] = useState(0);
+    // const [error, setError] = useState(null);
 
-
-    console.log({title, category, file, description});
     const handleFile = (e) => {
-    let selected = e.target.files[0];
-    if (selected) {
-      setFile(selected);
+      let selected = e.target.files[0];
+      if (selected) {
+        setFile(selected);
       }
     };
 
-    const HandleShare = async (e) => {
+    const handleShare = async (e) => {
       e.preventDefault();
       const shareData = {
         title,
@@ -31,8 +33,17 @@ const ShareItem = ({}) => {
       // add shareData to firebase
       const user = getCurrentUser();
       if(user) {
-        const {fileUrl, createdAt} = getUrl(file);
-        db.collection('stuffs').add({
+        const storageRef = storage.ref(file.name);
+        const collectionRef = db.collection('stuffs');
+
+        storageRef.put(file).then(async () => {
+          const fileUrl = await storageRef.getDownloadURL();
+          const createdAt = timestamp();
+          setFileUrl(fileUrl);
+          setCreatedAt(createdAt);
+        });
+
+        collectionRef.add({
             title,
             category,
             fileUrl,
@@ -118,7 +129,7 @@ const ShareItem = ({}) => {
           </Row>
           </Form.Group>
           <Col xs={{span: 3, offset:4}}>
-          <Button onClick={HandleShare} variant="success" type="submit">
+          <Button onClick={handleShare} variant="success" type="submit">
             Share
           </Button>
           </Col>

@@ -29,4 +29,4 @@ const getUrl = (file) => {
   return { progress, fileUrl, error, createdAt };
 }
 
-export default getUrl;
+export default useStorage;
