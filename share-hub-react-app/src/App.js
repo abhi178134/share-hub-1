@@ -5,7 +5,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
 import {Container} from 'react-bootstrap';
 import NavBar from './components/Navbar';
-import Items from './components/Items';
+import RenderItems from './components/RenderItems';
 import ShareItem from './components/ShareItem';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -23,7 +23,7 @@ function App() {
         <Route path="/login" exact component={Login}></Route>
         <Route path="/logout" exact component={Logout}></Route>
         <Route path="/share" exact component={ShareItem}></Route>
-        <Route path="/" exact component={Items}></Route>
+        <Route path="/" exact component={RenderItems}></Route>
         <Redirect to="/not-found" />
       </Switch>
       </Container>

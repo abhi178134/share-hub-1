@@ -70,7 +70,7 @@ class ShareItem extends Component {
             <Form.Label>Description of the item</Form.Label>
           </Col>
           <Col xs="6">
-            <Form.Control as="textarea" />
+            <Form.Control as="textarea" placeholder="Also add links if available or share file above" />
           </Col>
           </Row>
           </Form.Group>
