@@ -61,7 +61,7 @@ const RenderItems = ({}) => {
             </Button>
         ))
       }</Row>
-      <div className="row ml-2">
+      <div className="setting row ml-2">
         {filteredItems.map((item) => (
           <div key={item.id} className="col mb-4">
             <Item item={item} />
