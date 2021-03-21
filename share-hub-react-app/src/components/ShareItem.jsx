@@ -12,53 +12,33 @@ const ShareItem = ({}) => {
     const [description, setDescription] = useState(null);
     const [fileUrl, setFileUrl] = useState(null);
     const [createdAt, setCreatedAt] = useState(null);
-    const [author, setAuthor] = useState({});
+    const [author, setAuthor] = useState({name:"",phone:""});
     // const [progress, setProgress] = useState(0);
     // const [error, setError] = useState(null);
 
-    const handleFile = (e) => {
+    const handleFile = async (e) => {
       let selected = e.target.files[0];
       if (selected) {
         setFile(selected);
       }
     };
-
-    const handleShare = async (e) => {
-      e.preventDefault();
-      let myName = "";
-      let myPhone = "";
-      const uref = db.collection('users');
-      const me = await uref.where("email", "==", getCurrentUser().email).get();
-      me.forEach((doc) => {
-       myName = doc.data().name;
-       myPhone = doc.data().phone;
-       setAuthor({name: myName, phone: myPhone});
-       console.log(myName, myPhone);
-      });
-      const shareData = {
-        title,
-        category,
-        file,
-        description,
-        author: {
-          name: myName,
-          phone: myPhone,
-        }
-      };
-      console.log(shareData);
-      // add shareData to firebase
-      const user = getCurrentUser();
-      if(user) {
-        const storageRef = storage.ref(file.name);
-        const collectionRef = db.collection('stuffs');
-        storageRef.put(file).then(async () => {
+    useEffect(async () => {
+      const storageRef = file ? storage.ref(file.name) : null;
+      if(storageRef) {
+        await storageRef.put(file).then(async () => {
           const fileUrl = await storageRef.getDownloadURL();
           const createdAt = timestamp();
           setFileUrl(fileUrl);
           setCreatedAt(createdAt);
         });
+      }
+    }, [file]);
 
-        collectionRef.add({
+    useEffect(()=>{
+      const user = getCurrentUser();
+      const stuffDB = db.collection('stuffs');
+      if(user) {
+        stuffDB.add({
             title,
             category,
             fileUrl,
@@ -71,6 +51,23 @@ const ShareItem = ({}) => {
       }else {
         throw(console.error("Login first"))
       }
+    }, [author]);
+
+    const handleShare = async (e) => {
+      e.preventDefault();
+      const user = getCurrentUser();
+      let myName = "";
+      let myPhone = "";
+      const userDB = db.collection('users');
+      const stuffDB = db.collection('stuffs');
+      const me = await userDB.where("email", "==", user.email).get();
+      await me.forEach(async (doc) => {
+       myName = await doc.data().name;
+       myPhone = await doc.data().phone;
+       console.log("My Name", myName);
+       console.log("My Phone", myPhone);
+       setAuthor({name: myName, phone: myPhone});
+      });
     };
 
     return (
