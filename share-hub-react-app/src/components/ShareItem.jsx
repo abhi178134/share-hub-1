@@ -64,8 +64,6 @@ const ShareItem = ({}) => {
       await me.forEach(async (doc) => {
        myName = await doc.data().name;
        myPhone = await doc.data().phone;
-       console.log("My Name", myName);
-       console.log("My Phone", myPhone);
        setAuthor({name: myName, phone: myPhone});
       });
     };
