@@ -22,7 +22,14 @@ const Login = () => {
   };
 
   return (
-    <Form>
+    <Form className="form-style">
+      <Row className="mb-5 mt-5">
+          <Col className="text-center">
+            <h2>
+              LOGIN to ShareHub
+            </h2>
+          </Col>
+        </Row>
 
       <Form.Group>
       <Row>
@@ -46,7 +53,7 @@ const Login = () => {
       </Form.Group>
 
       <Col xs={{span: 3, offset:4}}>
-      <Button onClick={handleLogin} variant="primary" type="submit">
+      <Button className="btn-started" onClick={handleLogin} type="submit">
         Login
       </Button>
       </Col>

@@ -11,6 +11,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import NotFound from "./components/NotFound";
+import Home from './components/Home';
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
         <Route path="/login" exact component={Login}></Route>
         <Route path="/logout" exact component={Logout}></Route>
         <Route path="/share" exact component={ShareItem}></Route>
-        <Route path="/" exact component={RenderItems}></Route>
+        <Route path="/stuffs" exact component={RenderItems}></Route>
+        <Route path="/" exact component={Home}></Route>
         <Redirect to="/not-found" />
       </Switch>
       </Container>
