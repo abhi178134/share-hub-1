@@ -97,6 +97,7 @@ body {
   font-weight: bolder;
   text-align: center;
   margin: 20px;
+  color: linear-gradient(indigo, black) !important;
 }
 
 .card-img{
@@ -137,6 +138,10 @@ body {
 /* .navbar-custom .navbar-text{
   color: aliceblue;
 } */
+
+.setting{
+  padding-top: 40px;
+}
 
 .footer {
   margin-top: 1rem;
