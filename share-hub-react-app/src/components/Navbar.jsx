@@ -7,12 +7,12 @@ const NavBar = ({}) => {
   const [user, setUser] = useState(getCurrentUser);
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="nav-css" expand="lg">
       <Navbar.Brand as={Link} to="/">Share Hub</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/">Stuffs Available</Nav.Link>
+          <Nav.Link as={Link} to="/stuffs">Stuffs Available</Nav.Link>
           <Nav.Link as={Link} to="/share">Share Stuffs</Nav.Link>
         </Nav>
         {user &&

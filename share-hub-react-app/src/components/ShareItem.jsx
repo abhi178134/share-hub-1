@@ -66,21 +66,23 @@ const ShareItem = ({}) => {
        myPhone = await doc.data().phone;
        setAuthor({name: myName, phone: myPhone});
       });
+      window.location.assign("/");
     };
 
     return (
       <Container>
+
+
+        <Form className="form-style">
         <Row className="mb-5 mt-5">
           <Col className="text-center">
-            <p>
+            <h2>
               Wellcome to Share Hub. <br />
               Help those who are in need. <br />
               Start sharring now..
-            </p>
+            </h2>
           </Col>
         </Row>
-
-        <Form>
 
           <Form.Group controlId="">
           <Row>
@@ -140,7 +142,7 @@ const ShareItem = ({}) => {
           </Row>
           </Form.Group>
           <Col xs={{span: 3, offset:4}}>
-          <Button onClick={handleShare} variant="success" type="submit">
+          <Button className="btn-started" onClick={handleShare} type="submit">
             Share
           </Button>
           </Col>

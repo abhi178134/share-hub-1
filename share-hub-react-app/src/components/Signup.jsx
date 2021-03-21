@@ -37,7 +37,14 @@ const Signup = ({}) => {
   };
 
   return (
-    <Form>
+    <Form className="form-style">
+      <Row className="mb-5 mt-5">
+          <Col className="text-center">
+            <h2>
+             SIGNUP to ShareHub
+            </h2>
+          </Col>
+        </Row>
       <Form.Group controlId="">
       <Row>
       <Col xs={{span: 4}} >
@@ -90,7 +97,7 @@ const Signup = ({}) => {
       </Row>
       </Form.Group>
       <Col xs={{span: 3, offset:4}}>
-      <Button onClick={handleSignup} variant="primary" type="submit">
+      <Button className="btn-started" onClick={handleSignup} variant="primary" type="submit">
         Signup
       </Button>
       </Col>
