@@ -13,7 +13,7 @@ body {
   height: 90vh;
   margin-top: 70px;
   color: #282c34;
-  font-family: "Advent Pro";
+  font-family: "Blinker";
   /* border: 3px solid teal;
   border-radius: 15px; */
 }
@@ -92,6 +92,13 @@ body {
     transform: translateY(-10px);
   }
 }
+
+.heading{
+  font-weight: bolder;
+  text-align: center;
+  margin: 20px;
+}
+
 .card-img{
   opacity: 0.9;
   background-color: azure !important;
@@ -109,7 +116,7 @@ body {
 
 .card-style:hover{
   opacity: 1;
-  transform: scale(1.15);
+  transform: scale(1.05);
   transition: 0.5s;
 }
 
