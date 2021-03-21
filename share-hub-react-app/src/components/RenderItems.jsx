@@ -21,7 +21,7 @@ const RenderItems = ({}) => {
   return (
     <div className="heading">
       <h1>Here is some shared items from your peers</h1>
-      <div className="row ml-2">
+      <div className="setting row ml-2">
         {items.map((item) => (
           <div key={item.id} className="col mb-4">
             <Item item={item} />
