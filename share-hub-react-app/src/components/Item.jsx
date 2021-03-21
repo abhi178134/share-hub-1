@@ -2,9 +2,10 @@ import React, {useState} from "react";
 import {Container, Card, Button} from 'react-bootstrap';
 
 const Item = ({item}) => {
+  const urlExists = item.fileUrl ? (item.fileUrl.includes(".png") || item.fileUrl.includes(".jpeg") || item.fileUrl.includes(".jpg") || item.fileUrl.includes(".gif")) : false;
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={item.fileUrl || "https://picsum.photos/200/200"} />
+      <Card.Img variant="top" src={(urlExists && item.fileUrl) || "https://picsum.photos/200/200"} />
       <Card.Body>
         <Card.Title>{item.title}</Card.Title>
         <Card.Text>

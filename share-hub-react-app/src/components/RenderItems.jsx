@@ -15,7 +15,6 @@ const RenderItems = ({}) => {
         snap.forEach(item => {
           items.push({...item.data(), id: item.id});
         });
-        console.log(items);
         setItems(items);
       })},[]);
 
