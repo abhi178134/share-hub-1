@@ -19,7 +19,7 @@ const RenderItems = ({}) => {
       })},[]);
 
   return (
-    <div>
+    <div className="heading">
       <h1>Here is some shared items from your peers</h1>
       <div className="row ml-2">
         {items.map((item) => (
