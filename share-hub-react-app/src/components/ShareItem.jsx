@@ -114,9 +114,11 @@ const ShareItem = ({}) => {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item eventKey="book">Books</Dropdown.Item>
+              <Dropdown.Item eventKey="note">Notes</Dropdown.Item>
               <Dropdown.Item eventKey="tutorial">Tutorials</Dropdown.Item>
               <Dropdown.Item eventKey="gadget">Gadgets</Dropdown.Item>
               <Dropdown.Item eventKey="link">Important Links</Dropdown.Item>
+              <Dropdown.Item eventKey="other">Others</Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
           </Col>
