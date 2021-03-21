@@ -49,7 +49,9 @@ const ShareItem = ({}) => {
             console.log(err.message);
           });
       }else {
-        throw(console.error("Login first"))
+        window.location.assign("/login");
+
+        throw(console.error("Login first"));
       }
     }, [author]);
 
