@@ -19,6 +19,7 @@ const RenderItems = ({}) => {
           items.push({...item.data(), id: item.id});
         });
         setItems(items);
+        setFilteredItems(items);
   })},[]);
   const handleFilter = (e) => {
     e.preventDefault();
@@ -33,7 +34,8 @@ const RenderItems = ({}) => {
         }
       });
       setFilteredItems(filter);
-    } else {setFilteredItems(items);}
+    } else {
+       setFilteredItems(items);}
   }
   // useEffect(() => {
   //   if(category) {

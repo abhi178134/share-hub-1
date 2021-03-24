@@ -34,10 +34,44 @@ const ShareItem = ({}) => {
       }
     }, [file]);
 
-    useEffect(()=>{
+    useEffect(async ()=>{
+      const user = getCurrentUser();
+      let myName = "";
+      let myPhone = "";
+      const userDB = db.collection('users');
+      const me = await userDB.where("email", "==", user.email).get();
+      await me.forEach(async (doc) => {
+        myName = await doc.data().name;
+        myPhone = await doc.data().phone;
+        setAuthor({name: myName, phone: myPhone});
+      });
+      // const stuffDB = db.collection('stuffs');
+      // if(user && author) {
+      //   console.log(user, author);
+      //   stuffDB.add({
+      //       title,
+      //       category,
+      //       fileUrl,
+      //       description,
+      //       createdAt,
+      //       author
+      //     }).catch(err => {
+      //       console.log(err.message);
+      //     });
+      // }else {
+      //   window.location.assign("/login");
+
+      //   throw(console.error("Login first"));
+      // }
+    }, []);
+
+    const handleShare = async (e) => {
+      e.preventDefault();
       const user = getCurrentUser();
       const stuffDB = db.collection('stuffs');
-      if(user) {
+      if(user && author) {
+        console.log(user, author);
+        console.log(title);
         stuffDB.add({
             title,
             category,
@@ -45,7 +79,7 @@ const ShareItem = ({}) => {
             description,
             createdAt,
             author
-          }).catch(err => {
+          }).then(console.log("added")).catch(err => {
             console.log(err.message);
           });
       }else {
@@ -53,21 +87,17 @@ const ShareItem = ({}) => {
 
         throw(console.error("Login first"));
       }
-    }, [author]);
-
-    const handleShare = async (e) => {
-      e.preventDefault();
-      const user = getCurrentUser();
-      let myName = "";
-      let myPhone = "";
-      const userDB = db.collection('users');
-      const stuffDB = db.collection('stuffs');
-      const me = await userDB.where("email", "==", user.email).get();
-      await me.forEach(async (doc) => {
-       myName = await doc.data().name;
-       myPhone = await doc.data().phone;
-       setAuthor({name: myName, phone: myPhone});
-      });
+      // const user = getCurrentUser();
+      // let myName = "";
+      // let myPhone = "";
+      // const userDB = db.collection('users');
+      // const stuffDB = db.collection('stuffs');
+      // const me = await userDB.where("email", "==", user.email).get();
+      // await me.forEach(async (doc) => {
+      //  myName = await doc.data().name;
+      //  myPhone = await doc.data().phone;
+      //  setAuthor({name: myName, phone: myPhone});
+      // });
       window.location.assign("/");
     };
 
