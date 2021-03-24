@@ -68,11 +68,11 @@ const ShareItem = ({}) => {
     const handleShare = async (e) => {
       e.preventDefault();
       const user = getCurrentUser();
-      const stuffDB = db.collection('stuffs');
+      const stuffDB = await db.collection('stuffs');
       if(user && author) {
         console.log(user, author);
         console.log(title);
-        stuffDB.add({
+        await stuffDB.add({
             title,
             category,
             fileUrl,
