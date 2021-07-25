@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {Navbar, Nav, Form, Button, NavDropdown, FormControl} from 'react-bootstrap';
+import {Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {getCurrentUser} from '../services/auth';
 
-const NavBar = ({}) => {
-  const [user, setUser] = useState(getCurrentUser);
+const NavBar = () => {
+  const [user] = useState(getCurrentUser);
 
   return (
     <Navbar className="nav-css" expand="lg">

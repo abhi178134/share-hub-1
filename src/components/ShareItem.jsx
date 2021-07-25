@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {Container, Row, Col, Form, Button, Dropdown} from 'react-bootstrap';
 import {getCurrentUser} from '../services/auth';
-import {auth, db, storage, timestamp} from '../firebase/config.js';
+import {db, storage, timestamp} from '../firebase/config.js';
 // import getUrl from '../firebase/getUrl';
 
-const ShareItem = ({}) => {
+const ShareItem = () => {
 
     const [title, setTitle] = useState(null);
     const [category, setCategory] = useState(null);
@@ -22,47 +22,36 @@ const ShareItem = ({}) => {
         setFile(selected);
       }
     };
-    useEffect(async () => {
-      const storageRef = file ? storage.ref(file.name) : null;
-      if(storageRef) {
-        await storageRef.put(file).then(async () => {
-          const fileUrl = await storageRef.getDownloadURL();
-          const createdAt = timestamp();
-          setFileUrl(fileUrl);
-          setCreatedAt(createdAt);
-        });
+    useEffect(() => {
+      const fn = async () => {
+        const storageRef = file ? storage.ref(file.name) : null;
+        if(storageRef) {
+          await storageRef.put(file).then(async () => {
+            const fileUrl = await storageRef.getDownloadURL();
+            const createdAt = timestamp();
+            setFileUrl(fileUrl);
+            setCreatedAt(createdAt);
+          });
+        }
       }
+      fn();
+      
     }, [file]);
 
-    useEffect(async ()=>{
-      const user = getCurrentUser();
-      let myName = "";
-      let myPhone = "";
-      const userDB = db.collection('users');
-      const me = await userDB.where("email", "==", user.email).get();
-      await me.forEach(async (doc) => {
-        myName = await doc.data().name;
-        myPhone = await doc.data().phone;
-        setAuthor({name: myName, phone: myPhone});
-      });
-      // const stuffDB = db.collection('stuffs');
-      // if(user && author) {
-      //   console.log(user, author);
-      //   stuffDB.add({
-      //       title,
-      //       category,
-      //       fileUrl,
-      //       description,
-      //       createdAt,
-      //       author
-      //     }).catch(err => {
-      //       console.log(err.message);
-      //     });
-      // }else {
-      //   window.location.assign("/login");
-
-      //   throw(console.error("Login first"));
-      // }
+    useEffect(()=>{
+      const fn = async () => {
+        const user = getCurrentUser();
+        let myName = "";
+        let myPhone = "";
+        const userDB = db.collection('users');
+        const me = await userDB.where("email", "==", user.email).get();
+        await me.forEach(async (doc) => {
+          myName = await doc.data().name;
+          myPhone = await doc.data().phone;
+          setAuthor({name: myName, phone: myPhone});
+        });
+      }
+      fn();
     }, []);
 
     const handleShare = async (e) => {

@@ -9,10 +9,10 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const userData = {
-      email,
-      password
-    };
+    // const userData = {
+    //   email,
+    //   password
+    // };
     auth.signInWithEmailAndPassword(email, password).then(async (cred) => {
       const token = await auth.currentUser.getIdToken();
       console.log(token);

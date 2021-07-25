@@ -3,7 +3,7 @@ import {Form, Row, Col, Button} from 'react-bootstrap';
 import {setToken} from "../services/auth";
 import {auth, db} from '../firebase/config.js';
 
-const Signup = ({}) => {
+const Signup = () => {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);

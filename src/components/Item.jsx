@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Container, Card, Button} from 'react-bootstrap';
+import React from "react";
+import {Card} from 'react-bootstrap';
 
 const Item = ({item}) => {
   const urlExists = item.fileUrl ? (item.fileUrl.includes(".png") || item.fileUrl.includes(".jpeg") || item.fileUrl.includes(".jpg") || item.fileUrl.includes(".gif")) : false;
@@ -10,7 +10,7 @@ const Item = ({item}) => {
         <Card.Title style={{ fontWeight:'bold', textTransform:'uppercase' }}>{item.title}</Card.Title>
         <Card.Text>
           {item.description}<br />
-          File Url : <a href={item.fileUrl} target="_blank">Click Here</a> <br />
+          File Url : <a href={item.fileUrl} target="_blank" rel="noreferrer">Click Here</a> <br />
           Shared by : {item.author.name}<br />
           Contact at : {item.author.phone}
         </Card.Text>

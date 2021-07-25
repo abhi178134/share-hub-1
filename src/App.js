@@ -13,7 +13,7 @@ import Logout from './components/Logout';
 import NotFound from "./components/NotFound";
 import Home from './components/Home';
 
-function App() {
+const App = () => {
   return (
     <React.Fragment>
       <NavBar />
