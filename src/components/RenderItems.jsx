@@ -60,8 +60,11 @@ const RenderItems = ({}) => {
               <Thumb
               key={item.id}
               clickable
-              image={"https://picsum.photos/200/200"}
-              movieId={item.fileUrl}
+              desc={item.description}
+              image="https://picsum.photos/200/200"
+              fileUrl={item.fileUrl}
+              author={item.author.name}
+              contact={item.author.phone}
               />
             ))
           })

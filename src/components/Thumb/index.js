@@ -4,10 +4,18 @@ import { Link } from 'react-router-dom';
 // Styles
 import { Image } from './Thumb.styles';
 
-const Thumb = ({ image, movieId, clickable }) => (
+const Thumb = ({ desc, fileUrl,author, contact,image,clickable }) => (
   <div>
     {clickable ? (
-      <a href={movieId}><Image src={image} alt='movie-thumb' /></a>
+      <><a href={fileUrl}><Image src={image} alt='movie-thumb'/></a>
+      <p>
+        {desc}
+        <br/>
+        Owner:{author}
+        <br/>
+        Contact:{contact}
+      </p>
+      </>
     ) : (
       <Image src={image} alt='movie-thumb' />
     )}
@@ -16,7 +24,6 @@ const Thumb = ({ image, movieId, clickable }) => (
 
 Thumb.propTypes = {
   image: PropTypes.string,
-  movieId: PropTypes.string,
   clickable: PropTypes.bool
 };
 
