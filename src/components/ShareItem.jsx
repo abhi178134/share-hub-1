@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {Container, Row, Col, Form, Button, Dropdown} from 'react-bootstrap';
 import {getCurrentUser} from '../services/auth';
-import {auth, db, storage, timestamp} from '../firebase/config.js';
+import { db, storage, timestamp} from '../firebase/config.js';
 // import getUrl from '../firebase/getUrl';
 
 const ShareItem = ({}) => {

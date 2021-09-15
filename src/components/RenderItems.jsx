@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from "react";
-import {Container, Button, Row} from 'react-bootstrap';
-import {auth, db, storage, timestamp} from '../firebase/config.js';
-import Item from './Item';
+import { Button, Row} from 'react-bootstrap';
+import { db} from '../firebase/config.js';
+//import Item from './Item';
+import Grid from "./Grid";
+import Thumb from "./Thumb";
 
 const RenderItems = ({}) => {
   // array containing items
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-  const [category, setCategory] = useState("all");
+  // const [category, setCategory] = useState("all");
   const categories = ["all","book", "note", "tutorial", "link", "gadget", "other"]
 
   useEffect(async () => {
@@ -21,14 +23,15 @@ const RenderItems = ({}) => {
         setItems(items);
         setFilteredItems(items);
   })},[]);
+
   const handleFilter = (e) => {
     e.preventDefault();
     const c = e.target.innerHTML;
-    if(c != "all") {
+    if(c !== "all") {
       const filter = [];
       console.log(items, c);
       items.map((item)=>{
-        if(item.category == c) {
+        if(item.category === c) {
           console.log(item);
           filter.push(item);
         }
@@ -37,19 +40,7 @@ const RenderItems = ({}) => {
     } else {
        setFilteredItems(items);}
   }
-  // useEffect(() => {
-  //   if(category) {
-  //     const filter = [];
-  //     console.log(items, category);
-  //     items.map((item)=>{
-  //       if(item.category == category) {
-  //         filter.push(item);
-  //       }
-  //     });
-  //     setFilteredItems(filter);
-  //   }
-  // },[category, filteredItems]);
-  //   console.log(filteredItems);
+
   return (
     <div className="heading">
       <Row> {
@@ -63,13 +54,25 @@ const RenderItems = ({}) => {
             </Button>
         ))
       }</Row>
-      <div className="setting row ml-2">
+      <Grid>
+          {
+            filteredItems.map((item) => (
+              <Thumb
+              key={item.id}
+              clickable
+              image={"https://picsum.photos/200/200"}
+              movieId={item.fileUrl}
+              />
+            ))
+          })
+      </Grid>
+      {/* <div className="setting row ml-2">
         {filteredItems.map((item) => (
           <div key={item.id} className="col mb-4">
             <Item item={item} />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

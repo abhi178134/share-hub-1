@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Container, Card, Button} from 'react-bootstrap';
+import React from "react";
+import {Card} from 'react-bootstrap';
 
 const Item = ({item}) => {
   const urlExists = item.fileUrl ? (item.fileUrl.includes(".png") || item.fileUrl.includes(".jpeg") || item.fileUrl.includes(".jpg") || item.fileUrl.includes(".gif")) : false;
